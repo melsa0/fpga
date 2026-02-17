@@ -1,0 +1,13 @@
+# Vivado project files
+*.jou
+*.log
+*.str
+*.xpr
+.Xil/
+vivado_project*/
+vivado_gui*/
+output_test/
+
+# OS
+Thumbs.db
+.DS_Store
