@@ -48,22 +48,22 @@ assign da2_data = sine_data;
 ROM tabanli sinus dalga ureteci:
 
 1. `sin1024.mem` dosyasindan 1024 adet 14-bit hex deger BRAM'e yuklenir
-2. Her saat darbesinde adres 4 artirilir
+2. Her saat darbesinde adres 1 artirilir (tum 1024 sample kullanilir)
 3. ROM cikisi dogrudan DAC verisine atanir
 
 **Frekans hesabi:**
 ```
 f_out = f_clk / (ROM_boyutu / adres_adimi)
-f_out = 65 MHz / (1024 / 4) = 65 MHz / 256 = ~254 kHz
+f_out = 65 MHz / (1024 / 1) = 65 MHz / 1024 = ~63.5 kHz
 ```
 
 **Frekans degistirme:** `dac_output_top.v` icinde `sine_gen` modulunde:
 ```verilog
-rom_addr <= rom_addr + 10'd4;  // Bu degeri degistirin
+rom_addr <= rom_addr + 10'd1;  // Bu degeri degistirin
 ```
-- `1` -> ~63.5 kHz
+- `1` -> ~63.5 kHz (mevcut)
 - `2` -> ~127 kHz
-- `4` -> ~254 kHz (mevcut)
+- `4` -> ~254 kHz
 - `8` -> ~508 kHz
 - `16` -> ~1.016 MHz
 
@@ -193,16 +193,19 @@ Proje test edildiginde elde edilen tipik degerler:
 
 | Parametre | CH2 (DAC cikisi) |
 |-----------|-------------------|
-| Frekans | 253.91 kHz |
-| Vpp | 665.5 mV |
-| Vrms (AC) | 231.4 mV |
-| DC Offset | 4.7 mV |
-| THD | 2.85% |
-| SNR | 22.3 dB |
-| 2. Harmonik | -36.0 dB |
-| 3. Harmonik | -40.2 dB |
-| 4. Harmonik | -44.6 dB |
-| 5. Harmonik | -33.6 dB |
+| Frekans | 63.47 kHz |
+| Vpp | 1003.5 mV |
+| Vrms (AC) | 353.4 mV |
+| DC Offset | 4.9 mV |
+| THD | 0.48% |
+| SNR | 33.1 dB |
+| 2. Harmonik | -63.5 dB |
+| 3. Harmonik | -48.8 dB |
+| 4. Harmonik | -65.4 dB |
+| 5. Harmonik | -50.4 dB |
+| Sinyal kalitesi | MUKEMMEL |
+
+Detayli dalga formu analizi: [dalga_formu_analizi.md](dalga_formu_analizi.md)
 
 ---
 

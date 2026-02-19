@@ -71,7 +71,7 @@ endmodule
 // =========================================================================
 // Sine Wave Generator Module
 // 1024-sample 14-bit ROM loaded from sin1024.mem
-// Address step = 4 -> f_out = 65 MHz / (1024/4) = ~254 kHz
+// Address step = 1 -> f_out = 65 MHz / 1024 = ~63.5 kHz
 // =========================================================================
 module sine_gen(
     input               clk,
@@ -91,7 +91,7 @@ always @(posedge clk or posedge rst) begin
         rom_addr <= 10'd0;
         dac_data <= 14'h2000;
     end else begin
-        rom_addr <= rom_addr + 10'd4;
+        rom_addr <= rom_addr + 10'd1;
         dac_data <= sin_rom[rom_addr];
     end
 end
